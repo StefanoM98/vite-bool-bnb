@@ -17,7 +17,7 @@ export default {
         fetchApartments() {
             this.isLoading = true;
             axios.get(`${this.store.apiUrl}/apartments`).then((response)  => {
-                this.apartments.data = response;
+                this.apartments.data = response.data.results.data;
                 console.log(response.data.results);
             })
         }
