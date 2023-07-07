@@ -32,4 +32,7 @@ export default {
 
 <style lang="scss">
 @use "./style/general.scss" as *;
+main {
+    margin-top: 60px;
+}
 </style>
