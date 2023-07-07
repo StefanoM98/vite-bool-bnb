@@ -1,9 +1,35 @@
-<template>
-  <div>ciao</div>
-</template>
-
 <script>
-export default {};
+import { store } from "./store.js";
+import axios from "axios";
+import AppHeader from "./components/Header/AppHeader.vue";
+import AppFooter from "./components/Footer/AppFooter.vue";
+
+export default {
+    data() {
+        return {
+            store
+        }
+    },
+    components: {
+        AppHeader,
+        AppFooter,
+    }
+};
 </script>
 
-<style lang="scss" scoped></style>
+<template>
+    <!-- Header -->
+    <AppHeader/>
+
+    <main>
+        <router-view>
+
+        </router-view>
+    </main>
+    <!-- Footer -->
+    <AppFooter/>
+</template>
+
+<style lang="scss">
+@use "./style/general.scss" as *;
+</style>
