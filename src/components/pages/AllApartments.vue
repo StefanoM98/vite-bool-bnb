@@ -3,8 +3,14 @@ import axios from 'axios';
 import { store } from '../../store';
 
 import CardList from '../Main/CardList.vue';
+import AppSearch from './AppSearch.vue';
 export default {
     name: "AllApartments",
+
+    components: { 
+        CardList,
+        AppSearch,
+    },
     data() {
         return {
             store,
@@ -43,6 +49,7 @@ export default {
         },
         // Setta array appartamento passato nel parametro uguale all'array appartamenti filtrati
         filterApartments(apartments) {
+            this.showAll = false;
             this.filteredApartments = apartments;
         },
         // Calcola il raggio e aggiunge appartamenti all'array appartamenti filtrati se la distanza è minore o uguale al range nel parametro
@@ -108,12 +115,15 @@ export default {
     created() {
         this.fetchApartments();
     },
-    components: { CardList }
+    
 }
 </script>
 
 <template>
-    <CardList :apartments="apartments.data"/>
+    <AppSearch @filterApartments="filterApartments"/>
+    <CardList v-if="showAll" :apartments="apartments.data"/>
+    <CardList v-if="!showAll" :apartments="filteredApartments"/>
+
 </template>
 
 <style>
