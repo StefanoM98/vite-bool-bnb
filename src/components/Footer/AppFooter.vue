@@ -12,6 +12,6 @@ export default {
 </script>
 
 <template>
-    <footer class="fixed-bottom">sono footer</footer>
+    <footer class="">sono footer</footer>
 </template>
 <style></style>

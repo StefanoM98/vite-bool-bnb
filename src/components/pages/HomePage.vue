@@ -27,19 +27,29 @@ export default {
 </script>
 
 <template>
-    <router-link :to="{name: 'AllApartments'}" class="btn btn-success">
-        Inizia la tua ricerca
-    </router-link>
+    <div class="jumbotron">
 
-    <h3>Lista appartamenti sponsorizzati</h3>
-    <div v-for="apartment in sponsoredApartment" :key="apartment.id">
-        <p>
-            {{apartment.name}}
-        </p>
+        <router-link :to="{name: 'AllApartments'}" class="btn btn-success">
+            Inizia la tua ricerca
+        </router-link>
+        
+        <h3>Lista appartamenti sponsorizzati</h3>
+        <div v-for="apartment in sponsoredApartment" :key="apartment.id">
+            <p>
+                {{apartment.name}}
+            </p>
+        </div>
     </div>
 </template>
 
 
 <style lang="scss" scoped>
-
+.jumbotron {
+    height: 500px;
+    background-image: url("./src/assets/img/jumbotron_home.jpeg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    object-fit: cover;
+}
 </style>
