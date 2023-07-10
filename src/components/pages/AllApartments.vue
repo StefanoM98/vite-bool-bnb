@@ -131,7 +131,7 @@ export default {
     <CardList v-if="showAll" :apartments="apartments.data"/>
     <CardList v-else-if="!showAll" :apartments="filteredApartments"/>
     <div v-if="showNoResults" class="container">
-        questa ricerca non ha prodotto risultati
+       <p class="my-3">This search did not produce results, set other filters or specify the address you want to search by specifying the city</p>
     </div>
 
 </template>
