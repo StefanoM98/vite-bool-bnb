@@ -62,9 +62,9 @@ export default {
                 });
         },
         // Setta array appartamento passato nel parametro uguale all'array appartamenti filtrati
-        filterApartments(apartments) {
-            this.filteredApartments = apartments;
-        },
+        // filterApartments(apartments) {
+        //     this.filteredApartments = apartments;
+        // },
         // Calcola il raggio e aggiunge appartamenti all'array appartamenti filtrati se la distanza è minore o uguale al range nel parametro
         calculateDistance(radius) {
             if (this.rangeValue === null) {
@@ -72,6 +72,7 @@ export default {
             } else {
                 radius = this.rangeValue;
             }
+            this.showNoResults = false;
             this.filteredApartments = [];
             // Variabile per non stampare tutti gli appartamenti ma solo quelli filtrati per raggio
             this.showAll = false;
@@ -99,9 +100,9 @@ export default {
                     });
                 }
 
-                if (this.filteredApartments.length === 0) {
-                    this.showNoResults = true;
-                }
+            }
+            if (this.filteredApartments.length == 0) {
+                this.showNoResults = true;
             }
         },
         //converte gradi in radianti (serve a calculateDistance())
@@ -133,11 +134,12 @@ export default {
         filterApartments() {
             this.filteredApartments = [];
             this.showAll = false;
+            this.showNoResults = false;
             this.filteredApartments = this.apartments.filter(apartment => {
                 const apartmentServiceIds = apartment.services.map(service => service.id);
                 return this.services.every(serviceId => apartmentServiceIds.includes(serviceId));
             });
-            if (this.filteredApartments.length === 0) {
+            if (this.filteredApartments.length == 0) {
                 this.showNoResults = true;
             }
             console.log(this.filteredApartments);
@@ -167,7 +169,7 @@ export default {
                 <button @click.prevent="fetchCoordinates()" class="btn btn-primary mx-2" type="submit">Search</button>
             </form>
             <button @click="resetFilters" type="submit" class="btn btn-primary">Reset all filters</button>
-            <button @click="filterApartments()" class="btn btn-primary mx-2" type="submit">Apply
+            <button @click="filterApartments" class="btn btn-primary mx-2" type="submit">Apply
                 Filters</button>
 
         </div>
