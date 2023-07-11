@@ -16,13 +16,15 @@ export default {
             store,
             isLoading: false,
             apartments: [],
-            address: "",
-            lat_a: "",
-            lon_a: "",
             filteredApartments: [],
+            servicesApartments: [],
+            emptyAddress: '',
+            address: '',
+            lat_a: '',
+            lon_a: '',
             resetApartments: [],
             showAll: true,
-            rangeValue: null,
+            rangeValue: '',
             showNoResults: false,
 
             // gestione servizi
@@ -51,15 +53,19 @@ export default {
         fetchCoordinates() {
             this.lat_a = "";
             this.lon_a = "";
-            axios
-                .get(
-                    `https://api.tomtom.com/search/2/geocode/${this.address}.json?key=${this.store.ttKey}&countrySet=IT`
-                )
-                .then((response) => {
-                    this.lat_a = response.data.results[0].position.lat;
-                    this.lon_a = response.data.results[0].position.lon;
-                    this.calculateDistance();
-                });
+            if (this.address != '') {
+                axios
+                    .get(
+                        `https://api.tomtom.com/search/2/geocode/${this.address}.json?key=${this.store.ttKey}&countrySet=IT`
+                    )
+                    .then((response) => {
+                        this.lat_a = response.data.results[0].position.lat;
+                        this.lon_a = response.data.results[0].position.lon;
+                        this.calculateDistance();
+                    });
+            } else {
+                this.emptyAddress = 'Please, enter an address'
+            }
         },
         // Setta array appartamento passato nel parametro uguale all'array appartamenti filtrati
         // filterApartments(apartments) {
@@ -67,13 +73,13 @@ export default {
         // },
         // Calcola il raggio e aggiunge appartamenti all'array appartamenti filtrati se la distanza è minore o uguale al range nel parametro
         calculateDistance(radius) {
-            if (this.rangeValue === null) {
+            this.filteredApartments = [];
+            if (this.rangeValue === '') {
                 radius = 20;
             } else {
                 radius = this.rangeValue;
             }
             this.showNoResults = false;
-            this.filteredApartments = [];
             // Variabile per non stampare tutti gli appartamenti ma solo quelli filtrati per raggio
             this.showAll = false;
             for (let i = 0; i < this.apartments.length; i++) {
@@ -114,8 +120,11 @@ export default {
             this.fetchApartments();
             this.showAll = true;
             this.showNoResults = false;
-            this.address = "";
+            this.address = '';
+            this.rangeValue = '',
             this.services = [];
+            this.servicesApartments = [];
+            this.filteredApartments = [];
         },
         requireServices() {
             axios
@@ -132,18 +141,21 @@ export default {
                 });
         },
         filterApartments() {
-            this.filteredApartments = [];
+            this.servicesApartments = [];
             this.showAll = false;
             this.showNoResults = false;
             this.filteredApartments = this.apartments.filter(apartment => {
                 const apartmentServiceIds = apartment.services.map(service => service.id);
-                return this.services.every(serviceId => apartmentServiceIds.includes(serviceId));
+                const hasMatchingServices = this.services.every(serviceId => apartmentServiceIds.includes(serviceId));
+                const hasMatchingAddress = apartment.city.toLowerCase().includes(this.address.toLowerCase()) || apartment.address.toLowerCase().includes(this.address.toLowerCase());
+                return hasMatchingServices && hasMatchingAddress;
             });
             if (this.filteredApartments.length == 0) {
                 this.showNoResults = true;
             }
             console.log(this.filteredApartments);
         },
+        
     },
     created() {
         this.fetchApartments();
@@ -154,29 +166,29 @@ export default {
 
 <template>
     <div class="container">
-        <div class="">
-            <form class="flex-grow-1">
-                <input class="form-control" type="search" aria-label="Search" v-model="address" id="address"
-                    name="address" />
-                <ul class="d-flex flex-wrap px-3">
-                    <li class="px-3" v-for="service in allServices" :key="service.id">
-                        <label>
-                            <input type="checkbox" :id="service.id" :value="service.id" v-model="services" />
-                            <span class="ms-2">{{ service.name }}</span>
-                        </label>
-                    </li>
-                </ul>
-                <button @click.prevent="fetchCoordinates()" class="btn btn-primary mx-2" type="submit">Search</button>
-            </form>
-            <button @click="resetFilters" type="submit" class="btn btn-primary">Reset all filters</button>
-            <button @click="filterApartments" class="btn btn-primary mx-2" type="submit">Apply
-                Filters</button>
-
+        <form class="input-group">
+            <input class="form-control" type="search" aria-label="Search" v-model="address" id="address" name="address" :placeholder="emptyAddress"/>
+            <button @click.prevent="fetchCoordinates()" class="btn btn-primary" type="submit">Search address</button>
+        </form>
+        <label for="customRange3" class="form-label my-3">Enter search radius</label>
+        <div class="d-flex row-cols">
+            <p class="col-1">20 km</p>
+            <input type="range" class="form-range" min="20" max="200" step="1" id="customRange3" v-model="rangeValue">
+            <p class="col-1 text-end">200 km</p>
         </div>
-        <!-- <FilterSection :allApartments="filteredApartments"/> -->
+        <ul class="d-flex flex-wrap px-3 border rounded my-3">
+            <li class="col-3 px-3 list-group" v-for="service in allServices" :key="service.id">
+                <label>
+                    <input type="checkbox" :id="service.id" :value="service.id" v-model="services" />
+                    <span class="ms-3">{{ service.name }}</span>
+                </label>
+            </li>
+        </ul>
+        <button @click="resetFilters" type="submit" class="btn btn-primary">Reset all filters</button>
+        <button @click="filterApartments" class="btn btn-primary ms-3" type="submit">Apply Filters</button>
     </div>
     <CardList v-if="showAll" :apartments="apartments" />
-    <CardList v-else-if="!showAll" :apartments="filteredApartments" />
+    <CardList v-if="filteredApartments.length > 0" :apartments="filteredApartments" />
     <div v-if="showNoResults" class="container">
         <p class="my-3">
             This search did not produce results, set other filters or specify the
