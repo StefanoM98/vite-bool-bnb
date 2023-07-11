@@ -31,6 +31,11 @@ export default {
             services: [],
             allServices: [],
             requiredServices: [],
+
+            // gestione stanze, letti, bagni
+            rooms: '',
+            beds: '',
+            bathrooms: '',
         };
     },
     methods: {
@@ -125,6 +130,9 @@ export default {
             this.services = [];
             this.servicesApartments = [];
             this.filteredApartments = [];
+            this.beds = '';
+            this.bathrooms = '';
+            this.rooms = '';
         },
         requireServices() {
             axios
@@ -148,14 +156,17 @@ export default {
                 const apartmentServiceIds = apartment.services.map(service => service.id);
                 const hasMatchingServices = this.services.every(serviceId => apartmentServiceIds.includes(serviceId));
                 const hasMatchingAddress = apartment.city.toLowerCase().includes(this.address.toLowerCase()) || apartment.address.toLowerCase().includes(this.address.toLowerCase());
-                return hasMatchingServices && hasMatchingAddress;
+                const hasEnoughRooms = apartment.room_number >= this.rooms;
+                const hasEnoughBathrooms = apartment.bathroom_number >= this.bathrooms;
+                const hasEnoughBeds = apartment.bed_number >= this.beds;
+                return hasMatchingServices && hasMatchingAddress && hasEnoughRooms && hasEnoughBathrooms && hasEnoughBeds;
             });
             if (this.filteredApartments.length == 0) {
                 this.showNoResults = true;
             }
             console.log(this.filteredApartments);
         },
-        
+
     },
     created() {
         this.fetchApartments();
@@ -166,16 +177,20 @@ export default {
 
 <template>
     <div class="container">
+        <!-- Ricerca indirizzo/città -->
         <form class="input-group">
-            <input class="form-control" type="search" aria-label="Search" v-model="address" id="address" name="address" :placeholder="emptyAddress"/>
+            <input class="form-control" type="search" aria-label="Search" v-model="address" id="address" name="address"
+                :placeholder="emptyAddress" />
             <button @click.prevent="fetchCoordinates()" class="btn btn-primary" type="submit">Search address</button>
         </form>
+        <!-- Selezione raggio di ricerca -->
         <label for="customRange3" class="form-label my-3">Enter search radius</label>
         <div class="d-flex row-cols">
             <p class="col-1">20 km</p>
             <input type="range" class="form-range" min="20" max="200" step="1" id="customRange3" v-model="rangeValue">
             <p class="col-1 text-end">200 km</p>
         </div>
+        <!-- Servizi -->
         <ul class="d-flex flex-wrap px-3 border rounded my-3">
             <li class="col-3 px-3 list-group" v-for="service in allServices" :key="service.id">
                 <label>
@@ -184,6 +199,23 @@ export default {
                 </label>
             </li>
         </ul>
+        <div class="row g-3">
+            <!-- Selezione n.bagni -->
+            <div class="col-4 mb-3">
+                <label class="" for="bed">Bed number</label>
+                <input type="number" class="form-control" id="bed" placeholder="Beds number" min="0" v-model="beds">
+            </div>
+            <!-- Selezione n.stanze -->
+            <div class="col-4 mb-3">
+                <label class="" for="room">Room number</label>
+                <input type="number" class="form-control" id="room" placeholder="Username" min="0" v-model="rooms">
+            </div>
+            <!-- Selezione n.letti -->
+            <div class="col-4 mb-3">
+                <label class="" for="bathroom">Bathroon number</label>
+                <input type="number" class="form-control" id="bathroom" placeholder="Username" min="0" v-model="bathrooms">
+            </div>
+        </div>
         <button @click="resetFilters" type="submit" class="btn btn-primary">Reset all filters</button>
         <button @click="filterApartments" class="btn btn-primary ms-3" type="submit">Apply Filters</button>
     </div>
