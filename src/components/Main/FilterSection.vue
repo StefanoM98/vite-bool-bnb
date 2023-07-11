@@ -27,7 +27,7 @@ export default {
           params: {
             rooms: this.rooms,
             bathrooms: this.bathroom,
-            services: this.services,
+            services: this.activeCheck,
           },
         })
         .then((response) => {
@@ -35,7 +35,7 @@ export default {
             return this.services.includes(service.id);
           });
         });
-      const filteredApartments = this.AllApartments;
+      // this.filteredApartments = this.AllApartments;
     },
   },
   mounted() {
@@ -45,20 +45,20 @@ export default {
 </script>
 
 <template>
-  <div class="container">
+  <!-- <div class="container">
     <div class="form-check form-check-inline">
       Seleziona i servizi che vuoi
       <ul class="d-flex flex-wrap px-3">
         <li class="px-3" v-for="service in allServices" :key="service.id">
           <label>
-            <input type="checkbox" :value="service.id" />
+            <input type="checkbox" :value="service.id" v-model="services"/>
             <span class="m-2">{{ service.name }}</span>
           </label>
         </li>
       </ul>
     </div>
-    <button @click="getAllServices()" class="btn btn-primary">Go filter</button>
-  </div>
+    <button @click.prevent="getAllServices()" class="btn btn-primary">Go filter</button>
+  </div> -->
 </template>
 
 <style lang="scss" scoped>
