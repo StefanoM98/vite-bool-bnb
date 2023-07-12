@@ -4,6 +4,7 @@ import { store } from "../../store";
 
 import CardList from "../Main/CardList.vue";
 import AppSearch from "./AppSearch.vue";
+
 export default {
     name: "AllApartments",
 
@@ -16,6 +17,7 @@ export default {
             store,
             isLoading: false,
             apartments: [],
+            apartmentsLoader: false,
             filteredApartments: [],
             servicesApartments: [],
             emptyAddress: '',
@@ -45,6 +47,7 @@ export default {
             });
         },
         fetchApartments() {
+            
             this.isLoading = true;
             axios
                 .get(`${this.store.apiUrl}/apartments`)
@@ -75,6 +78,7 @@ export default {
         // Calcola il raggio e aggiunge appartamenti all'array appartamenti filtrati se la distanza è minore o uguale al range nel parametro
         calculateDistance(radius) {
             this.filteredApartments = [];
+            this.apartmentsLoader = true;
             if (this.rangeValue === '') {
                 radius = 20;
             } else {
@@ -106,11 +110,11 @@ export default {
                         distance: distance, // Add the distance property to each filtered apartment
                     });
                 }
-
             }
             if (this.filteredApartments.length == 0) {
                 this.showNoResults = true;
             }
+            this.apartmentsLoader = false;
         },
         //converte gradi in radianti (serve a calculateDistance())
         toRadians(degrees) {
@@ -164,15 +168,62 @@ export default {
         },
 
     },
-    created() {
+    mounted() {
         this.fetchApartments();
         this.fetchServices();
+    },
+    created() {
+        // caricamento delle query all'avvio della pagina
+        if (this.apartments) {
+            // Gestione indirizzo al caricamento della pagina
+            if (this.$route.query.address != undefined) {
+                this.address = this.$route.query.address;
+                this.fetchCoordinates();
+                console.log(this.address);
+            } else {
+                this.address = '';
+            }
+            // Gestione dei servizi al caricamento della pagina
+            if (this.$route.query.services != undefined) {
+                this.services = this.$route.query.services;
+            } else {
+                this.services = [];
+            }
+            // Gestione posti letto al caricamento della pagina
+            if (this.$route.query.bed != undefined) {
+                this.beds = this.$route.query.bed;
+            } else {
+                this.beds = '';
+            }
+            // Gestione stanze al caricamento della pagina
+            if (this.$route.query.room != undefined) {
+                this.rooms = this.$route.query.room;
+            } else {
+                this.rooms = '';
+            }
+            // Gestione bagni al caricamento della pagina
+            if (this.$route.query.bathroom != undefined) {
+                this.bathrooms = this.$route.query.bathroom;
+            } else {
+                this.bathrooms = '';
+            }
+            // Gestione stanze al caricamento della pagina
+            if (this.$route.query.range != undefined) {
+                this.rangeValue = this.$route.query.range;
+            } else {
+                this.rangeValue = '';
+            }
+        }
     },
 };
 </script>
 
 <template>
-    <div class="container">
+    <div v-if="apartmentsLoader">
+        Loading...
+    </div>
+    <div v-else class="container">
+
         <!-- Ricerca indirizzo/città -->
         <form class="input-group">
             <input class="form-control" type="search" aria-label="Search" v-model="address" id="address" name="address"
@@ -209,11 +260,15 @@ export default {
             <!-- Selezione n.letti -->
             <div class="col-4 mb-3">
                 <label class="" for="bathroom">Bathroon number</label>
-                <input type="number" class="form-control" id="bathroom" placeholder="Bathroom number" min="0" v-model="bathrooms">
+                <input type="number" class="form-control" id="bathroom" placeholder="Bathroom number" min="0"
+                    v-model="bathrooms">
             </div>
         </div>
         <button @click="resetFilters" type="submit" class="btn btn-primary">Reset all filters</button>
-        <button @click="filterApartments" class="btn btn-primary ms-3" type="submit">Apply Filters</button>
+        <router-link
+            :to="{ name: 'AllApartments', query: { address: this.address, services: this.services, bed: this.beds, room: this.rooms, bathroom: this.bathrooms, range: this.rangeValue } }">
+            <button @click="filterApartments" class="btn btn-primary ms-3" type="submit">Apply Filters</button>
+        </router-link>
     </div>
     <CardList v-if="showAll" :apartments="apartments" />
     <CardList v-if="filteredApartments.length > 0" :apartments="filteredApartments" />

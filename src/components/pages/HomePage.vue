@@ -9,16 +9,17 @@ export default {
             sponsoredApartment: [],
             store,
             isLoading: false,
+            address: '',
         }
     },
     methods: {
         fetchSponsoredApartment() {
             this.isLoading = true;
-            axios.get(`${this.store.apiUrl}/sponsored-apartments`).then((response) =>{
+            axios.get(`${this.store.apiUrl}/sponsored-apartments`).then((response) => {
                 this.sponsoredApartment = response.data.results.data;
                 console.log(response.data.results.data);
             })
-        }
+        },
     },
     mounted() {
         this.fetchSponsoredApartment();
@@ -28,15 +29,18 @@ export default {
 
 <template>
     <div class="jumbotron">
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Start your search" v-model="this.address">
 
-        <router-link :to="{name: 'AllApartments'}" class="btn btn-success">
-            Inizia la tua ricerca
-        </router-link>
-        
+            <router-link :to="{ name: 'AllApartments', query: {address: this.address}}" class="btn btn-success">
+                Inizia la tua ricerca
+            </router-link>
+        </div>
+
         <h3>Lista appartamenti sponsorizzati</h3>
         <div v-for="apartment in sponsoredApartment" :key="apartment.id">
             <p>
-                {{apartment.name}}
+                {{ apartment.name }}
             </p>
         </div>
     </div>
