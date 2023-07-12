@@ -171,7 +171,7 @@ export default {
     mounted() {
         this.fetchApartments();
         this.fetchServices();
-        if (this.filteredApartments != []) {
+        if (this.$route.query.search != undefined) {
             this.showAll = false
             this.filteredApartments = JSON.parse(this.$route.query.search)
         }
