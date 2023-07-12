@@ -72,10 +72,6 @@ export default {
                 this.emptyAddress = 'Please, enter an address'
             }
         },
-        // Setta array appartamento passato nel parametro uguale all'array appartamenti filtrati
-        // filterApartments(apartments) {
-        //     this.filteredApartments = apartments;
-        // },
         // Calcola il raggio e aggiunge appartamenti all'array appartamenti filtrati se la distanza è minore o uguale al range nel parametro
         calculateDistance(radius) {
             this.filteredApartments = [];
@@ -208,12 +204,12 @@ export default {
             <!-- Selezione n.stanze -->
             <div class="col-4 mb-3">
                 <label class="" for="room">Room number</label>
-                <input type="number" class="form-control" id="room" placeholder="Username" min="0" v-model="rooms">
+                <input type="number" class="form-control" id="room" placeholder="Room number" min="0" v-model="rooms">
             </div>
             <!-- Selezione n.letti -->
             <div class="col-4 mb-3">
                 <label class="" for="bathroom">Bathroon number</label>
-                <input type="number" class="form-control" id="bathroom" placeholder="Username" min="0" v-model="bathrooms">
+                <input type="number" class="form-control" id="bathroom" placeholder="Bathroom number" min="0" v-model="bathrooms">
             </div>
         </div>
         <button @click="resetFilters" type="submit" class="btn btn-primary">Reset all filters</button>
