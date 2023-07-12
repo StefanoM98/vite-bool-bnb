@@ -47,8 +47,8 @@ export default {
             });
         },
         fetchApartments() {
-            
             this.isLoading = true;
+            this.showNoResults = true;
             axios
                 .get(`${this.store.apiUrl}/apartments`)
                 .then((response) => {
@@ -111,7 +111,7 @@ export default {
                     });
                 }
             }
-            if (this.filteredApartments.length == 0) {
+            if (this.filteredApartments) {
                 this.showNoResults = true;
             }
             this.apartmentsLoader = false;
@@ -171,6 +171,10 @@ export default {
     mounted() {
         this.fetchApartments();
         this.fetchServices();
+        if (this.filteredApartments != []) {
+            this.showAll = false
+            this.filteredApartments = JSON.parse(this.$route.query.search)
+        }
     },
     created() {
         // caricamento delle query all'avvio della pagina
@@ -178,8 +182,6 @@ export default {
             // Gestione indirizzo al caricamento della pagina
             if (this.$route.query.address != undefined) {
                 this.address = this.$route.query.address;
-                this.fetchCoordinates();
-                console.log(this.address);
             } else {
                 this.address = '';
             }
@@ -272,7 +274,7 @@ export default {
     </div>
     <CardList v-if="showAll" :apartments="apartments" />
     <CardList v-if="filteredApartments.length > 0" :apartments="filteredApartments" />
-    <div v-if="showNoResults" class="container">
+    <div v-if="filteredApartments.length === 0 & showNoResults" class="container">
         <p class="my-3">
             This search did not produce results, set other filters or specify the
             address you want to search by specifying the city
