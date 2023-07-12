@@ -5,7 +5,7 @@ import AboutUs from "./components/pages/AboutUs.vue";
 import AppDetail from "./components/Main/AppDetail.vue";
 
 const router = createRouter({
-    history: createWebHistory(),
+    history: createWebHistory(import.meta.env.BASE_URL),
     routes: [
         {
             path: "/",
