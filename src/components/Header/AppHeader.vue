@@ -45,9 +45,9 @@ export default {
                                         User Actions
                                     </a>
                                     <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="http://localhost:8000/login">Login</a></li>
+                                        <li><a class="dropdown-item" href="http://localhost:8000/login" target="_blank">Login</a></li>
                                         <li><hr class="dropdown-divider"></li>
-                                        <li><a class="dropdown-item" href="http://localhost:8000/register">Register</a></li>
+                                        <li><a class="dropdown-item" href="http://localhost:8000/register" target="_blank">Register</a></li>
                                     </ul>
                                 </li>
                             </div>
