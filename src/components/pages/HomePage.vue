@@ -114,16 +114,17 @@ export default {
 <template>
     <div class="jumbotron">
         <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="Start your search" v-model="this.address" @keyup="fetchCoordinates()">
-            <router-link  :to="{ name: 'AllApartments', query: {address: this.address, search: JSON.stringify(filteredApartments) }}" class="btn btn-success">
+            <router-link  :to="{ name: 'AllApartments'}" class="btn btn-success">
                 Inizia la tua ricerca
             </router-link>
         </div>
 
-        <h3>Lista appartamenti sponsorizzati</h3>
+        <h3>Bests of apartments</h3>
         <div v-for="apartment in sponsoredApartment" :key="apartment.id">
             <p>
-                {{ apartment.name }}
+                <router-link  :to="{ name: 'ApartmentsDetails', params: {slug:apartment.slug}}" class="">
+                    {{ apartment.name }}
+                </router-link>
             </p>
         </div>
     </div>

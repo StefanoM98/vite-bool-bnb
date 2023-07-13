@@ -56,6 +56,7 @@ export default {
                 })
                 .finally(() => {
                     this.isLoading = false;
+                    console.log(this.apartments);
                 });
         },
         fetchCoordinates() {
@@ -169,53 +170,55 @@ export default {
 
     },
     mounted() {
+        // if (this.$route.query.search != undefined || this.$route.query.search != []) {
+        //     this.showAll = false
+        //     this.filteredApartments = JSON.parse(this.$route.query.search)
+        // } else {
+        //     this.showAll = true
+        // }
         this.fetchApartments();
         this.fetchServices();
-        if (this.$route.query.search != undefined) {
-            this.showAll = false
-            this.filteredApartments = JSON.parse(this.$route.query.search)
-        }
     },
     created() {
-        // caricamento delle query all'avvio della pagina
-        if (this.apartments) {
-            // Gestione indirizzo al caricamento della pagina
-            if (this.$route.query.address != undefined) {
-                this.address = this.$route.query.address;
-            } else {
-                this.address = '';
-            }
-            // Gestione dei servizi al caricamento della pagina
-            if (this.$route.query.services != undefined) {
-                this.services = this.$route.query.services;
-            } else {
-                this.services = [];
-            }
-            // Gestione posti letto al caricamento della pagina
-            if (this.$route.query.bed != undefined) {
-                this.beds = this.$route.query.bed;
-            } else {
-                this.beds = '';
-            }
-            // Gestione stanze al caricamento della pagina
-            if (this.$route.query.room != undefined) {
-                this.rooms = this.$route.query.room;
-            } else {
-                this.rooms = '';
-            }
-            // Gestione bagni al caricamento della pagina
-            if (this.$route.query.bathroom != undefined) {
-                this.bathrooms = this.$route.query.bathroom;
-            } else {
-                this.bathrooms = '';
-            }
-            // Gestione stanze al caricamento della pagina
-            if (this.$route.query.range != undefined) {
-                this.rangeValue = this.$route.query.range;
-            } else {
-                this.rangeValue = '';
-            }
-        }
+        // // caricamento delle query all'avvio della pagina
+        // if (this.apartments) {
+        //     // Gestione indirizzo al caricamento della pagina
+        //     if (this.$route.query.address != undefined) {
+        //         this.address = this.$route.query.address;
+        //     } else {
+        //         this.address = '';
+        //     }
+        //     // Gestione dei servizi al caricamento della pagina
+        //     if (this.$route.query.services != undefined) {
+        //         this.services = this.$route.query.services;
+        //     } else {
+        //         this.services = [];
+        //     }
+        //     // Gestione posti letto al caricamento della pagina
+        //     if (this.$route.query.bed != undefined) {
+        //         this.beds = this.$route.query.bed;
+        //     } else {
+        //         this.beds = '';
+        //     }
+        //     // Gestione stanze al caricamento della pagina
+        //     if (this.$route.query.room != undefined) {
+        //         this.rooms = this.$route.query.room;
+        //     } else {
+        //         this.rooms = '';
+        //     }
+        //     // Gestione bagni al caricamento della pagina
+        //     if (this.$route.query.bathroom != undefined) {
+        //         this.bathrooms = this.$route.query.bathroom;
+        //     } else {
+        //         this.bathrooms = '';
+        //     }
+        //     // Gestione stanze al caricamento della pagina
+        //     if (this.$route.query.range != undefined) {
+        //         this.rangeValue = this.$route.query.range;
+        //     } else {
+        //         this.rangeValue = '';
+        //     }
+        // }
     },
 };
 </script>
@@ -227,17 +230,16 @@ export default {
     <div v-else class="container">
 
         <!-- Ricerca indirizzo/città -->
-        <form class="input-group">
-            <input class="form-control" type="search" aria-label="Search" v-model="address" id="address" name="address"
+        <label for="address">Search address</label>
+        <input class="form-control" type="search" aria-label="Search" v-model="address" id="address" name="address"
                 :placeholder="emptyAddress" />
-            <button @click.prevent="fetchCoordinates()" class="btn btn-primary" type="submit">Search address</button>
-        </form>
+        
         <!-- Selezione raggio di ricerca -->
         <label for="customRange3" class="form-label my-3">Enter search radius</label>
         <div class="d-flex row-cols">
-            <p class="col-1">20 km</p>
-            <input type="range" class="form-range" min="20" max="200" step="1" id="customRange3" v-model="rangeValue">
-            <p class="col-1 text-end">200 km</p>
+            <p class="col-1">2 km</p>
+            <input type="range" class="form-range" min="2" max="20" step="1" id="customRange3" v-model="rangeValue">
+            <p class="col-1 text-end">20 km</p>
         </div>
         <!-- Servizi -->
         <ul class="d-flex flex-wrap px-3 border rounded my-3">
@@ -266,15 +268,14 @@ export default {
                     v-model="bathrooms">
             </div>
         </div>
-        <button @click="resetFilters" type="submit" class="btn btn-primary">Reset all filters</button>
-        <router-link
-            :to="{ name: 'AllApartments', query: { address: this.address, services: this.services, bed: this.beds, room: this.rooms, bathroom: this.bathrooms, range: this.rangeValue } }">
-            <button @click="filterApartments" class="btn btn-primary ms-3" type="submit">Apply Filters</button>
-        </router-link>
+        <button @click="resetFilters" type="submit" class="btn btn-primary">Reset filters</button>
+        <button @click.prevent="filterApartments()" v-if="services.length > 0 || rooms != '' || beds != '' || bathrooms != ''" class="btn btn-primary" type="submit">Search</button>
+        <button @click.prevent="fetchCoordinates()" v-else class="btn btn-primary" type="submit">Search</button>
+
     </div>
     <CardList v-if="showAll" :apartments="apartments" />
     <CardList v-if="filteredApartments.length > 0" :apartments="filteredApartments" />
-    <div v-if="filteredApartments.length === 0 & showNoResults" class="container">
+    <div v-if="filteredApartments.length === 0 & !showAll" class="container">
         <p class="my-3">
             This search did not produce results, set other filters or specify the
             address you want to search by specifying the city

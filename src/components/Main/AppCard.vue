@@ -3,7 +3,7 @@
     export default {
         props: {
             apartment: Object,
-        }
+        },
     }
 </script>
 
@@ -17,6 +17,7 @@
                         <img :src="apartment.image" :alt="apartment.name">
                     </div>
                     <div class="card-body">
+                        <div v-show="apartment.sponsored === true">sponsorizzato</div>
                         <h2 class="py-1">{{ apartment.address }}</h2>
                         <p>
                             {{ apartment.bed_number }}
