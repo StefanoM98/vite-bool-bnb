@@ -7,13 +7,13 @@ import AppFooter from "./components/Footer/AppFooter.vue";
 export default {
     data() {
         return {
-            store
+            store,
         }
     },
     components: {
         AppHeader,
         AppFooter,
-    }
+    },
 };
 </script>
 
