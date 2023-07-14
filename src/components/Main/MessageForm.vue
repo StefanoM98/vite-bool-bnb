@@ -126,6 +126,10 @@ export default {
     .form-btn {
       background-color: $dark_accent_color;
       color: #f1f1f1;
+        &:hover {
+            background-color: $dark_color;
+            color: #f1f1f1;
+        }
     }
   }
 }

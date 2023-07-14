@@ -16,12 +16,13 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 /*  import specific icons */
 
-import { faGlobe, faRssSquare, faSquare, faStar } from "@fortawesome/free-solid-svg-icons";
+import { faDoorOpen, faGlobe, faRotate, faRssSquare, faSquare, faStar } from "@fortawesome/free-solid-svg-icons";
 import { faFilter } from "@fortawesome/free-solid-svg-icons";
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 import { faCrown } from "@fortawesome/free-solid-svg-icons";
+
 
 
 /brands/;
@@ -75,8 +76,9 @@ library.add(
   faCrown,
   faStar,
   faSquare,
-  faRssSquare
-
+  faRssSquare,
+  faDoorOpen,
+  faRotate,
 );
 /brands/;
 library.add(

@@ -27,7 +27,7 @@ export default {
                         <h2 class="py-1">{{ apartment.address }}, {{ apartment.city }}</h2>
                         <p>
                             {{ apartment.bed_number }} <font-awesome-icon icon="fa-solid fa-bed" /> -
-                            {{ apartment.room_number }} <font-awesome-icon icon="fa-solid fa-house" /> -
+                            {{ apartment.room_number }} <font-awesome-icon :icon="['fas', 'door-open']" /> -
                             {{ apartment.square_meters }} <span class="fw-bold">sqm</span>
                         </p>
                     </div>
