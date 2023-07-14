@@ -227,12 +227,11 @@ export default {
     <div v-if="apartmentsLoader">
         Loading...
     </div>
-    <div v-else class="container">
+    <div v-else class="container margin-fix">
 
         <!-- Ricerca indirizzo/città -->
         <label for="address">Search address</label>
-        <input class="form-control" type="search" aria-label="Search" v-model="address" id="address" name="address"
-                :placeholder="emptyAddress" />
+        <input class="form-control" autocomplete="off" type="search" aria-label="Search" v-model="address" id="address" name="address" placeholder="Search for address or city" />
         
         <!-- Selezione raggio di ricerca -->
         <label for="customRange3" class="form-label my-3">Enter search radius</label>
@@ -264,8 +263,7 @@ export default {
             <!-- Selezione n.letti -->
             <div class="col-4 mb-3">
                 <label class="" for="bathroom">Bathroon number</label>
-                <input type="number" class="form-control" id="bathroom" placeholder="Bathroom number" min="0"
-                    v-model="bathrooms">
+                <input type="number" class="form-control" id="bathroom" placeholder="Bathroom number" min="0" v-model="bathrooms">
             </div>
         </div>
         <button @click="resetFilters" type="submit" class="btn btn-primary">Reset filters</button>
@@ -283,4 +281,8 @@ export default {
     </div>
 </template>
 
-<style></style>
+<style lang="scss" scoped>
+.margin-fix {
+  margin-top: 100px;
+}
+</style>

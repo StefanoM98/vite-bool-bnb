@@ -35,7 +35,7 @@ export default {
 <template>
   <div class="tomtom">
         <h3 class="mb-4">Map:</h3>
-        <div id="map" class="map-container"></div>
+        <div id="map" class="map-container rounded shadow"></div>
     </div>
 </template> 
  

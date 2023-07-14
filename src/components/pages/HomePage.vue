@@ -113,6 +113,7 @@ export default {
 
 <template>
     <div class="jumbotron">
+    </div>
         <div class="input-group mb-3">
             <router-link  :to="{ name: 'AllApartments'}" class="btn btn-success">
                 Inizia la tua ricerca
@@ -127,7 +128,6 @@ export default {
                 </router-link>
             </p>
         </div>
-    </div>
 </template>
 
 

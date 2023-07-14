@@ -12,7 +12,7 @@ export default {
 </script>
 
 <template>
-    <header class="fixed-top">
+    <header class="fixed-top shadow">
         <div class="container">
             <nav class="navbar navbar-expand-lg p-0 m-0">
                 <div class="container-fluid text-center">
@@ -61,7 +61,10 @@ export default {
 
 <style lang="scss" scoped>
 @use "../../style/general.scss" as *;
+@use "../../style/partials/variables.scss" as *;
+
 header {
+    background-color: $light_color;
     .logo {
         width: 3rem;
     }
