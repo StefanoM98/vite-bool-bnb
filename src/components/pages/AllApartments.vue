@@ -310,6 +310,10 @@ export default {
     margin-top: 100px;
 }
 
+.service-label {
+    cursor: pointer;
+}
+
 .service-label.selected-service {
     // background-color: $dark_accent_color;
     color: $dark_accent_color
