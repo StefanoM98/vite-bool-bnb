@@ -161,6 +161,7 @@ export default {
 .home-title {
     top: 50%;
     left: 50%;
+    width: 50%;
     transform: translate(-50%, -50%);
     color: $dark_color;
 }
@@ -170,6 +171,7 @@ export default {
 }
 
 .my-card {
+    // width: 300px;
     padding: 2rem;
     background-color: rgb(221, 221, 221, 0.6);
     border-radius: 10px;
@@ -216,6 +218,17 @@ export default {
             max-width: 300px;
             color: white;
         }
+    }
+
+}
+@media (max-width: 570px) {
+    .home-title {
+        width: 80%;
+    }
+}
+@media (max-width: 1000px) {
+    .home-title {
+        width: 80%;
     }
 }
 </style>

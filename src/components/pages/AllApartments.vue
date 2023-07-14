@@ -248,7 +248,7 @@ export default {
             <div class="col my-3">
                 <div class="d-flex flex-row align-items-start">
                     <!-- Selezione n.bagni -->
-                    <div class="col mb-3">
+                    <div class="col">
                         <label class="me-2" for="bed">Bed number:</label>
                         <input type="number" class="form-control brb" id="bed" min="0" max="10" v-model="beds">
                     </div>
@@ -258,7 +258,7 @@ export default {
                         <input type="number" class="form-control brb" id="room" min="0" max="10" v-model="rooms">
                     </div>
                     <!-- Selezione n.letti -->
-                    <div class="col mb-3">
+                    <div class="col">
                         <label class="me-2" for="bathroom">Bathroom number:</label>
                         <input type="number" class="form-control brb" id="bathroom" min="0" max="10" v-model="bathrooms">
                     </div>
