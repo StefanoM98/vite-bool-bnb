@@ -1,7 +1,8 @@
 <script>
 import axios from 'axios';
 import { store } from '../../store';
-import { stringifyQuery } from 'vue-router';
+import AppCard from '../Main/AppCard.vue';
+
 export default {
     name: "HomePage",
     data() {
@@ -23,6 +24,9 @@ export default {
             showNoResults: false,
         }
     },
+    components: {
+        AppCard,
+    },
     methods: {
         fetchSponsoredApartment() {
             this.isLoading = true;
@@ -33,101 +37,99 @@ export default {
                 this.isLoading = false;
             });
         },
-        fetchApartments() {
-            this.isLoading = true;
-            axios
-                .get(`${this.store.apiUrl}/apartments`)
-                .then((response) => {
-                    this.apartments = response.data.results.data;
-                })
-                .finally(() => {
-                    this.isLoading = false;
-                });
-        },
-        fetchCoordinates() {
-            this.lat_a = "";
-            this.lon_a = "";
-            if (this.address != '') {
-                axios
-                    .get(
-                        `https://api.tomtom.com/search/2/geocode/${this.address}.json?key=${this.store.ttKey}&countrySet=IT`
-                    )
-                    .then((response) => {
-                        this.lat_a = response.data.results[0].position.lat;
-                        this.lon_a = response.data.results[0].position.lon;
-                        this.calculateDistance();
-                    });
-            } else {
-                this.emptyAddress = 'Please, enter an address'
-            }
-        },
+        // fetchApartments() {
+        //     this.isLoading = true;
+        //     axios
+        //         .get(`${this.store.apiUrl}/apartments`)
+        //         .then((response) => {
+        //             this.apartments = response.data.results.data;
+        //         })
+        //         .finally(() => {
+        //             this.isLoading = false;
+        //         });
+        // },
+        // fetchCoordinates() {
+        //     this.lat_a = "";
+        //     this.lon_a = "";
+        //     if (this.address != '') {
+        //         axios
+        //             .get(
+        //                 `https://api.tomtom.com/search/2/geocode/${this.address}.json?key=${this.store.ttKey}&countrySet=IT`
+        //             )
+        //             .then((response) => {
+        //                 this.lat_a = response.data.results[0].position.lat;
+        //                 this.lon_a = response.data.results[0].position.lon;
+        //                 this.calculateDistance();
+        //             });
+        //     } else {
+        //         this.emptyAddress = 'Please, enter an address'
+        //     }
+        // },
         // Calcola il raggio e aggiunge appartamenti all'array appartamenti filtrati se la distanza è minore o uguale al range nel parametro
-        calculateDistance(radius) {
-            this.filteredApartments = [];
-            if (this.rangeValue === '') {
-                radius = 20;
-            } else {
-                radius = this.rangeValue;
-            }
-            this.showNoResults = false;
-            // Variabile per non stampare tutti gli appartamenti ma solo quelli filtrati per raggio
-            this.showAll = false;
-            for (let i = 0; i < this.apartments.length; i++) {
-                const lat_a = this.lat_a; // Latitudine del punto 1
-                const lon_a = this.lon_a; // Longitudine del punto 1
-                const lat_b = this.apartments[i].latitude; // Latitudine del punto 2
-                const lon_b = this.apartments[i].longitude; // Longitudine del punto 2
-                const earthRadius = 6371; // Raggio medio della Terra in chilometri
-                const dLat = this.toRadians(lat_b - lat_a);
-                const dLon = this.toRadians(lon_b - lon_a);
-                const a =
-                    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-                    Math.cos(this.toRadians(lat_a)) *
-                    Math.cos(this.toRadians(lat_b)) *
-                    Math.sin(dLon / 2) *
-                    Math.sin(dLon / 2);
-                const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-                const distance = earthRadius * c;
+        // calculateDistance(radius) {
+        //     this.filteredApartments = [];
+        //     if (this.rangeValue === '') {
+        //         radius = 20;
+        //     } else {
+        //         radius = this.rangeValue;
+        //     }
+        //     this.showNoResults = false;
+        //     // Variabile per non stampare tutti gli appartamenti ma solo quelli filtrati per raggio
+        //     this.showAll = false;
+        //     for (let i = 0; i < this.apartments.length; i++) {
+        //         const lat_a = this.lat_a; // Latitudine del punto 1
+        //         const lon_a = this.lon_a; // Longitudine del punto 1
+        //         const lat_b = this.apartments[i].latitude; // Latitudine del punto 2
+        //         const lon_b = this.apartments[i].longitude; // Longitudine del punto 2
+        //         const earthRadius = 6371; // Raggio medio della Terra in chilometri
+        //         const dLat = this.toRadians(lat_b - lat_a);
+        //         const dLon = this.toRadians(lon_b - lon_a);
+        //         const a =
+        //             Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        //             Math.cos(this.toRadians(lat_a)) *
+        //             Math.cos(this.toRadians(lat_b)) *
+        //             Math.sin(dLon / 2) *
+        //             Math.sin(dLon / 2);
+        //         const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        //         const distance = earthRadius * c;
 
-                if (distance <= radius) {
-                    this.filteredApartments.push({
-                        ...this.apartments[i],
-                        distance: distance, // Add the distance property to each filtered apartment
-                    });
-                }
-                console.log(this.filteredApartments);
-            }
-        },
+        //         if (distance <= radius) {
+        //             this.filteredApartments.push({
+        //                 ...this.apartments[i],
+        //                 distance: distance, // Add the distance property to each filtered apartment
+        //             });
+        //         }
+        //         console.log(this.filteredApartments);
+        //     }
+        // },
         //converte gradi in radianti (serve a calculateDistance())
-        toRadians(degrees) {
-            return (degrees * Math.PI) / 180;
-        },
+        // toRadians(degrees) {
+        //     return (degrees * Math.PI) / 180;
+        // },
     },
     mounted() {
         this.fetchSponsoredApartment();
-        this.fetchApartments();
-        
+        // this.fetchApartments();
     }
 }
 </script>
 
 <template>
     <div class="jumbotron">
+    </div>
         <div class="input-group mb-3">
             <router-link  :to="{ name: 'AllApartments'}" class="btn btn-success">
                 Inizia la tua ricerca
             </router-link>
         </div>
 
-        <h3>Bests of apartments</h3>
-        <div v-for="apartment in sponsoredApartment" :key="apartment.id">
-            <p>
-                <router-link  :to="{ name: 'ApartmentsDetails', params: {slug:apartment.slug}}" class="">
-                    {{ apartment.name }}
-                </router-link>
-            </p>
+        <div class="container pt-3">
+            <h3>Bests of apartments</h3>
+            <div v-if="isLoading">Loading</div>
+            <div v-else class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xxl-4 pb-5 pt-3">
+                <AppCard class="col" v-for="apartment in sponsoredApartment" :key="apartment.id" :apartment="apartment"/>
+            </div>
         </div>
-    </div>
 </template>
 
 

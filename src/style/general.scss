@@ -1,1 +1,37 @@
+@use "./partials/variables.scss" as *;
 @import "bootstrap/scss/bootstrap.scss";
+
+body {
+  background-color: $light_color;
+  color: $dark_color;
+  font-family: "Belleza", sans-serif;
+  //font-family: "Fredoka", sans-serif;
+  //font-family: "Roboto", sans-serif;
+  //font-family: "Roboto Condensed", sans-serif;
+}
+
+ul li {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+// main *************************************
+
+main {
+  // margin-top: 11rem;
+  // margin-bottom: 4rem;
+  background-color: $light_color;
+  min-height: 850px;
+}
+
+// footer ***********************************
+
+.primary-btn {
+  background-color: $dark_accent_color;
+  color: $light_color;
+  border: none;
+}

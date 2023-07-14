@@ -16,6 +16,7 @@ export default {
                 text: '',
                 state_message: false,
             },
+            errors: [],
             success: false,
         }
     },
@@ -36,6 +37,11 @@ export default {
                 this.message.text = '';
                 this.message.state_message = false;
                 this.success = true;
+            }).catch((error) => {
+                const res_errors = error.response.data.errors;
+                for (const field in res_errors) {
+                    this.errors.push(res_errors[field][0])
+                }
             })
         }
     }
@@ -43,8 +49,17 @@ export default {
 </script>
 
 <template>
-    <div v-if="success">
+    <div v-if="errors.length" class="alert alert-danger d-flex justify-content-between">
+        <ul>
+            <li v-for="error in errors">{{ error }}</li>
+        </ul>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+        </button>
+    </div>
+    <div v-if="success" class="alert alert-success d-flex justify-content-between">
         Message has been sended correctly
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+        </button>
     </div>
     <div class="form-box d-flex flex-column p-2 rounded-4">
         <div class="box">
@@ -78,7 +93,7 @@ export default {
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn form-btn rounded-5 mt-2 fw-bold">
-                            Send
+                            Send message
                         </button>
                     </div>
                 </form>
@@ -89,4 +104,33 @@ export default {
 </template>
 
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+@use "../../style/partials/variables.scss" as *;
+
+.form-box {
+  box-shadow: 1px 1px 10px 10px lightgray;
+
+  .message-box {
+    background-color: #f1f1f1;
+
+    .form-control:focus {
+      outline: none;
+      box-shadow: none;
+    }
+
+    input:focus,
+    textarea:focus {
+      border-color: $dark_accent_color;
+    }
+
+    .form-btn {
+      background-color: $dark_accent_color;
+      color: #f1f1f1;
+        &:hover {
+            background-color: $dark_color;
+            color: #f1f1f1;
+        }
+    }
+  }
+}
+</style>
