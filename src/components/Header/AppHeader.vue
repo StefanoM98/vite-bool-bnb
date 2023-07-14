@@ -25,17 +25,17 @@ export default {
                     <div class="collapse navbar-collapse justify-content-between" id="navbarScroll">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0 flex-grow-1">
                             <li class="nav-item spacing">
-                                <router-link :to="{name: 'Home'}" class="nav-link">
+                                <router-link :to="{name: 'Home'}" class="nav-link" active-class="active">
                                     Home
                                 </router-link>
                             </li>
                             <li class="nav-item spacing">
-                                <router-link :to="{name: 'AllApartments'}" class="nav-link">
+                                <router-link :to="{name: 'AllApartments'}" class="nav-link" :class="{active : $route.path.startsWith('/details')}" active-class="active">
                                     Apartments
                                 </router-link>
                             </li>
                             <li class="nav-item spacing">
-                                <router-link :to="{name: 'AboutUs'}" class="nav-link">
+                                <router-link :to="{name: 'AboutUs'}" class="nav-link" active-class="active">
                                     About Us
                                 </router-link>
                             </li>
@@ -71,6 +71,9 @@ header {
     }
     .nav-link {
         color: $light_color;
+    }
+    .active {
+        color: black;
     }
     .spacing {
         width: calc(100% / 3);
