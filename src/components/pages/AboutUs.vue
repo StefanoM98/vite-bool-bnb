@@ -5,9 +5,7 @@
 </script>
 
 <template>
-    <div>
-        siamo noi
-    </div>
+
 </template>
 
 
