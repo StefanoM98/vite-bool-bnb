@@ -75,10 +75,6 @@ header {
     background-color: $dark_accent_color;
     color: $light_color;
 
-    .logo {
-
-    }
-
     .nav-link {
         color: $light_color;
     }
