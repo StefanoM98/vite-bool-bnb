@@ -76,7 +76,7 @@ header {
     color: $light_color;
 
     .logo {
-        width: 3rem;
+
     }
 
     .nav-link {

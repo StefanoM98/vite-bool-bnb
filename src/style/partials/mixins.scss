@@ -1,0 +1,35 @@
+@use "./variables.scss" as *;
+@mixin flex-center($axis: "central") {
+  display: flex;
+
+  @if $axis == "horizontal" {
+    justify-content: center;
+  } @else if $axis == "central" {
+    justify-content: center;
+    align-items: center;
+  } @else if $axis == "vertical" {
+    align-items: center;
+  }
+}
+
+@mixin btn_hover {
+  button {
+    &:hover {
+      background-color: $dark_color;
+      color: $light_color;
+    }
+    &:active {
+      background-color: inherit;
+      color: inherit;
+    }
+  }
+}
+
+@mixin link_hover {
+  a {
+    &:hover {
+      color: $lighter_accent_color;
+      background-color: inherit;
+    }
+  }
+}
