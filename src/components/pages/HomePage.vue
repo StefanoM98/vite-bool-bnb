@@ -3,6 +3,7 @@ import axios from 'axios';
 import { store } from '../../store';
 import AppCard from '../Main/AppCard.vue';
 
+import Loader from '../Main/Loader.vue';
 export default {
     name: "HomePage",
     data() {
@@ -25,8 +26,9 @@ export default {
         }
     },
     components: {
-        AppCard,
-    },
+    AppCard,
+    Loader
+},
     methods: {
         fetchSponsoredApartment() {
             this.isLoading = true;
@@ -115,31 +117,33 @@ export default {
 </script>
 
 <template>
-    <div class="jumbotron position-relative">
-        <div class="position-absolute home-title text-center">
-            <div class="my-card mb-4">
-                <h2 class="fw-bolder d-inline-block">Bool</h2>
-                <h2 class="fw-bolder d-inline-block title-color">BnB</h2>
-                <p class="fw-bolder fs-3">Where every guest feels at home, <br> anywhere in the world.</p>
-                <div class="my-button-container mt-3">
-                    <form submit.prevent class="text-center d-flex justify-content-center">
-                        <router-link :to="{ name: 'AllApartments' }" class="btn btn-primary mx-2" type="submit">
-                            <span class="btn-icon">
-                                <font-awesome-icon icon="fa-solid fa-magnifying-glass" aria-hidden="true" />
-                            </span>
-                            <span class="btn-text ms-2">See all Apartments</span>
-                        </router-link>
-                    </form>
+    <Loader v-if="isLoading"/>
+    <div v-else>
+        <div class="jumbotron position-relative">
+            <div class="position-absolute home-title text-center">
+                <div class="my-card mb-4">
+                    <h2 class="fw-bolder d-inline-block">Bool</h2>
+                    <h2 class="fw-bolder d-inline-block title-color">BnB</h2>
+                    <p class="fw-bolder fs-3">Where every guest feels at home, <br> anywhere in the world.</p>
+                    <div class="my-button-container mt-3">
+                        <form submit.prevent class="text-center d-flex justify-content-center">
+                            <router-link :to="{ name: 'AllApartments' }" class="btn btn-primary mx-2" type="submit">
+                                <span class="btn-icon">
+                                    <font-awesome-icon icon="fa-solid fa-magnifying-glass" aria-hidden="true" />
+                                </span>
+                                <span class="btn-text ms-2">See all Apartments</span>
+                            </router-link>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-
-    <div class="container pt-3">
-        <h3>Bests of apartments</h3>
-        <div v-if="isLoading">Loading</div>
-        <div v-else class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xxl-4 pb-5 pt-3">
-            <AppCard class="col" v-for="apartment in sponsoredApartment" :key="apartment.id" :apartment="apartment" />
+        
+        <div class="container pt-3">
+            <h3>Bests of apartments</h3>
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xxl-4 pb-5 pt-3">
+                <AppCard class="col" v-for="apartment in sponsoredApartment" :key="apartment.id" :apartment="apartment" />
+            </div>
         </div>
     </div>
 </template>

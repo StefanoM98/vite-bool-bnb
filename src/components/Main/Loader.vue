@@ -4,21 +4,28 @@ export default {
 };
 </script>
 <template>
-  <div class="loader_content">
-    <div class="transform"><div class="loader"></div></div>
-
-    <p>loading</p>
-    <div class="words">
-      <span class="word">hotels</span>
-      <span class="word">hills</span>
-      <span class="word">apartments</span>
-      <span class="word">lofts</span>
-      <span class="word">houses</span>
-    </div>
+      <div class="position-absolute ms_position">
+        <div class="loader_content">
+          <div class="transform"><div class="loader"></div></div>
+        
+          <p>loading</p>
+          <div class="words">
+            <span class="word">houses</span>
+            <span class="word">hotels</span>
+            <span class="word">apartments</span>
+            <span class="word">lofts</span>
+            <span class="word">houses</span>
+          </div>
+      </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
+.ms_position {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
 .loader_content {
   color: black;
   font-family: "Poppins", sans-serif;

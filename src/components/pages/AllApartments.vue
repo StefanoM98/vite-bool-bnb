@@ -4,13 +4,15 @@ import { store } from "../../store";
 
 import CardList from "../Main/CardList.vue";
 import AppSearch from "./AppSearch.vue";
+import Loader from "../Main/Loader.vue";
 
 export default {
     name: "AllApartments",
-
+    
     components: {
         CardList,
         AppSearch,
+        Loader,
     },
     data() {
         return {
@@ -224,9 +226,7 @@ export default {
 </script>
 
 <template>
-    <div v-if="apartmentsLoader">
-        Loading...
-    </div>
+    <Loader v-if="isLoading"/>
     <div v-else class="container margin-fix">
 
         <!-- Ricerca indirizzo/città -->
@@ -319,9 +319,6 @@ export default {
     color: $dark_accent_color
 }
 
-.brb {
-    // width: 5rem;
-}
 
 .form-control:focus {
     outline: none;
