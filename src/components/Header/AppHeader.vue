@@ -48,7 +48,7 @@ export default {
                             </li>
                             <li class="nav-item spacing">
                                 <a class="nav-link ms-lg-auto" href="http://localhost:8000" target="_blank">
-                                    User Actions
+                                    Manager Area
                                 </a>
                             </li>
                         </ul>
