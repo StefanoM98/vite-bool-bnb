@@ -87,7 +87,7 @@ export default {
 .jumbotron {
     margin-top: 2rem;
     height: 500px;
-    background-image: url("./src/assets/img/jumbotron_home.jpeg");
+    background-image: url("./src/assets/img/home.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -157,11 +157,13 @@ export default {
     }
 
 }
+
 @media (max-width: 570px) {
     .home-title {
         width: 80%;
     }
 }
+
 @media (max-width: 1000px) {
     .home-title {
         width: 80%;
