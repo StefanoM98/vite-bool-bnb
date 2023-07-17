@@ -9,7 +9,7 @@ export default {
     <div class="container">
         <!-- Inizio Row -->
         <div class="row justify-content-md-center">
-            <div class="col-lg-3 col-md-6 col-sm-12">
+            <div class="col-lg-3 col-md-6 col-sm-12 mb-3">
                 <div class="card h-100">
                     <div class="background_img">
                         <div class="img1">
@@ -41,7 +41,7 @@ export default {
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-6 col-sm-12">
+            <div class="col-lg-3 col-md-6 col-sm-12 mb-3">
                 <div class="card h-100">
                     <div class="background_img">
                         <div class="img1">
@@ -73,7 +73,7 @@ export default {
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-6 col-sm-12">
+            <div class="col-lg-3 col-md-6 col-sm-12 mb-3">
                 <div class="card h-100">
                     <div class="background_img">
                         <div class="img1">
@@ -105,7 +105,7 @@ export default {
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-6 col-sm-12">
+            <div class="col-lg-3 col-md-6 col-sm-12 mb-3">
                 <div class="card h-100">
                     <div class="background_img">
                         <div class="img1">

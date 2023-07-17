@@ -35,9 +35,9 @@ export default {
   <div v-if="isLoading"> Loading</div>
   <!-- Aggiungi il componente Loader quando isLoading è true -->
 
-  <div v-else-if="!isLoading" class="margin-fix">
+  <div v-else-if="!isLoading" class="margin-fix mx-3">
     <!-- <AppCard v-if="apartment" :apartment="apartment" /> -->
-    <div class="container detail-appartment py-2 px-5 my-4 rounded-4">
+    <div class="container detail-appartment py-2 px-5 rounded-4">
       <div class="row py-3">
         <h2 class="title-section">{{ apartment.name }}</h2>
         <div class="col-12 pt-3">
@@ -49,12 +49,12 @@ export default {
       </div>
       <!-- detail  -->
       <div class="row">
-        <div class="col-12 col-lg-8 d-flex flex-column py-3 pe-5">
+        <div class="col-12 col-lg-8 d-flex flex-column py-3">
           <div class="pb-2">
             <h2 class="fw-semibold">{{ apartment.address }}</h2>
           </div>
           <div class="border-bottom border-secondary">
-            <ul class="fix-list d-flex flex-row">
+            <ul class="fix-list d-flex flex-column flex-sm-row">
               <li>
                 {{ apartment.room_number }}
                 <span class="main-color" v-if="apartment.rooms < 2">Room</span> 
@@ -159,14 +159,14 @@ export default {
 // appartment detail ****************************
 
 .margin-fix {
-  margin-top: 5rem;
+  margin-top: 6rem;
   margin-bottom: 4rem;
 
   .detail-appartment {
     background-color: #f1f1f1;
     color: $dark_color;
     box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
-    margin: 18rem auto;
+    // margin: 18rem auto;
 
     .appartment-image-frame {
       // background-image: url(../../assets/images/house-10b.jpg);

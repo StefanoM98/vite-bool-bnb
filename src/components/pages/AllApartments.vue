@@ -8,7 +8,7 @@ import Loader from "../Main/Loader.vue";
 
 export default {
     name: "AllApartments",
-    
+
     components: {
         CardList,
         AppSearch,
@@ -226,7 +226,7 @@ export default {
 </script>
 
 <template>
-    <Loader v-if="isLoading"/>
+    <Loader v-if="isLoading" />
     <div v-else class="container margin-fix">
 
         <!-- Ricerca indirizzo/città -->
@@ -235,59 +235,90 @@ export default {
             name="address" placeholder="Search for address or city" />
 
         <!-- Selezione raggio di ricerca -->
-        <label for="customRange3" class="form-label my-3">Enter search radius</label>
         <div class="row row-cols-1 row-cols-md-1">
-            <div class="col">
+            <div class="col" v-if="address != ''">
+                <label for="customRange3" class="form-label my-3">Enter search radius</label>
                 <div class="d-flex row-cols align-items-center w-100">
-                    <p class="col-1 m-0">2 km</p>
                     <input type="range" class="rangeSliderDistance my-3" min="2" max="20" step="0.1" id="customRange3"
-                        v-model="rangeValue">
-                    <p class="col-1 m-0 text-end">20 km</p>
+                    v-model="rangeValue" >
+                </div>
+                <div class="d-flex">
+                    <p class="col m-0">2 km</p>
+                    <p class="col m-0 text-end">20 km</p>
                 </div>
             </div>
-            <div class="col my-3">
-                <div class="d-flex flex-row align-items-start">
-                    <!-- Selezione n.bagni -->
-                    <div class="col">
-                        <label class="me-2" for="bed">Bed number:</label>
-                        <input type="number" class="form-control brb" id="bed" min="0" max="10" v-model="beds">
-                    </div>
-                    <!-- Selezione n.stanze -->
-                    <div class="col mx-3">
-                        <label class="me-2" for="room">Room number:</label>
-                        <input type="number" class="form-control brb" id="room" min="0" max="10" v-model="rooms">
-                    </div>
-                    <!-- Selezione n.letti -->
-                    <div class="col">
-                        <label class="me-2" for="bathroom">Bathroom number:</label>
-                        <input type="number" class="form-control brb" id="bathroom" min="0" max="10" v-model="bathrooms">
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Servizi -->
-        <div class="container">
-            <ul class="row row-cols-2 row-cols-md-3 row-cols-lg-3 row-cols-xxl-4 border rounded my-3 px-0 px-md-3">
-                <li class="col py-2 list-group" v-for="service in allServices" :key="service.id">
-                    <label
-                        :class="['service-label  form-check px-3 justify-content-center', { 'selected-service': services.includes(service.id) }]">
-                        <input type="checkbox" class="form-check-input d-none" :id="service.id" :value="service.id"
-                            v-model="services" />
-                        <div class="d-flex flex-row">
-                            <div class="service-icon d-flex flex-row align-items-center">
-                                <span class="align-items-center"><font-awesome-icon :icon="service.icon" /></span>
-                                <span class="ms-2 text-truncate">{{ service.name }}</span>
+            <!-- selezione filtri -->
+            <div class="accordion my-3" id="accordionExample">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingOne">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                            Filters
+                        </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
+                        data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <div class="col my-3">
+                                <div class="d-flex flex-row align-items-start">
+                                    <!-- Selezione n.bagni -->
+                                    <div class="col">
+                                        <label class="me-2" for="bed">Beds:</label>
+                                        <input type="number" class="form-control brb" id="bed" min="0" max="10"
+                                            v-model="beds">
+                                    </div>
+                                    <!-- Selezione n.stanze -->
+                                    <div class="col mx-3">
+                                        <label class="me-2" for="room">Rooms:</label>
+                                        <input type="number" class="form-control brb" id="room" min="0" max="10"
+                                            v-model="rooms">
+                                    </div>
+                                    <!-- Selezione n.letti -->
+                                    <div class="col">
+                                        <label class="me-2" for="bathroom">Bathrooms:</label>
+                                        <input type="number" class="form-control brb" id="bathroom" min="0" max="10"
+                                            v-model="bathrooms">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Servizi -->
+                            <div class="container">
+                                <ul
+                                    class="row row-cols-2 row-cols-md-3 row-cols-lg-3 row-cols-xxl-4 border rounded my-3 px-0 px-md-3">
+                                    <li class="col py-2 list-group" v-for="service in allServices" :key="service.id">
+                                        <label
+                                            :class="['service-label  form-check px-3 justify-content-center', { 'selected-service': services.includes(service.id) }]">
+                                            <input type="checkbox" class="form-check-input d-none" :id="service.id"
+                                                :value="service.id" v-model="services" />
+                                            <div class="d-flex flex-row">
+                                                <div class="service-icon d-flex flex-row align-items-center">
+                                                    <span class="align-items-center"><font-awesome-icon
+                                                            :icon="service.icon" /></span>
+                                                    <span class="ms-2 text-truncate">{{ service.name }}</span>
+                                                </div>
+                                            </div>
+                                        </label>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
-                    </label>
-                </li>
-            </ul>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
-        <button @click="resetFilters" type="submit" class="btn reset-btn rounded-5 mt-2 fw-bold">Reset filters <font-awesome-icon :icon="['fas', 'rotate']" /></button>
+
+        <button @click="resetFilters" type="submit" class="btn reset-btn rounded-5 mt-2 fw-bold">Reset filters
+            <font-awesome-icon :icon="['fas', 'rotate']" /></button>
         <button @click.prevent="filterApartments()"
             v-if="services.length > 0 || rooms != '' || beds != '' || bathrooms != ''"
-            class="btn form-btn rounded-5 mt-2 ms-2 fw-bold" type="submit">Search <font-awesome-icon icon="fa-solid fa-magnifying-glass" /></button>
+            class="btn form-btn rounded-5 mt-2 ms-2 fw-bold" type="submit">Search <font-awesome-icon
+                icon="fa-solid fa-magnifying-glass" /></button>
+        <button @click.prevent="resetFilters"
+            v-else-if="services.length > 0 || rooms != '' || beds != '' || bathrooms != '' || address == ''"
+            class="btn form-btn rounded-5 mt-2 ms-2 fw-bold" type="submit">Search <font-awesome-icon
+                icon="fa-solid fa-magnifying-glass" /></button>
         <button @click.prevent="fetchCoordinates()" v-else class="btn form-btn rounded-5 mt-2 ms-2 fw-bold"
             type="submit">Search <font-awesome-icon icon="fa-solid fa-magnifying-glass" /></button>
 
@@ -365,4 +396,5 @@ textarea:focus {
         background-color: $dark_color;
         cursor: pointer;
     }
-}</style>
+}
+</style>
