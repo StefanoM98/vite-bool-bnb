@@ -56,9 +56,7 @@ export default {
                     </div>
                     <div class="card-body">
                         <p class="card-text text-center">
-                            Sono uno sviluppatore web con una vasta gamma di esperienze lavorative nel mio bagaglio.
-                            Appassionato di fitness, filosofia e tecnologie, utilizzo quest'ultima passione per arricchire
-                            il mio lavoro e offrire soluzioni creative e innovative.
+                            Sono un junior sviluppatore web con molte esperienze lavorative. Appassionato di gaming, del mondo del calcio e dell'informatica in generale. Pronto sempre a nuove sfide e ad arricchire il mio bagaglio culturale.
                         </p>
                     </div>
                     <div class="card-footer">
@@ -88,9 +86,7 @@ export default {
                     </div>
                     <div class="card-body">
                         <p class="card-text text-center">
-                            Sono uno sviluppatore web con una vasta gamma di esperienze lavorative nel mio bagaglio.
-                            Appassionato di fitness, filosofia e tecnologie, utilizzo quest'ultima passione per arricchire
-                            il mio lavoro e offrire soluzioni creative e innovative.
+                            A seguito degli studi e dopo aver lavorato per due anni con la piattaforma Wordpress la passione per la tecnologia e la voglia di mettermi in gioco hanno avuto la meglio spingendomi ad aumentare le mie competenze in ambito informatico.
                         </p>
                     </div>
                     <div class="card-footer">
@@ -120,9 +116,7 @@ export default {
                     </div>
                     <div class="card-body">
                         <p class="card-text text-center">
-                            Sono uno sviluppatore web con una vasta gamma di esperienze lavorative nel mio bagaglio.
-                            Appassionato di fitness, filosofia e tecnologie, utilizzo quest'ultima passione per arricchire
-                            il mio lavoro e offrire soluzioni creative e innovative.
+                            Da sempre appassionato di tecnologia, ho deciso di trasformare la mia passione in una carriera e diventare uno sviluppatore web, alimentando la mia creatività per creare esperienze digitali coinvolgenti e innovative.
                         </p>
                     </div>
                     <div class="card-footer">
